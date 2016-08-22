@@ -27,3 +27,5 @@
 *.exe
 *.out
 *.app
+
+sketch_netLcd/conf.h
