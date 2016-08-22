@@ -14,9 +14,9 @@ ESP-WROOM-02はWiFi機能を有するコンピュータモジュールで[esp826
 
 ### 他のドキュメント
 
-- [NetLCD/install_ja.md](https://github.com/h-nari/NetLCD/blob/master/sketch_NetLCD/install.md "NetLCD/install_ja.md at master · h-nari/NetLCD"): sketch_netLcd.ino のインストール方法
+- [NetLCD/install_ja.md](https://github.com/h-nari/NetLCD/blob/master/sketch_NetLCD/install_ja.md "NetLCD/install_ja.md at master · h-nari/NetLCD"): sketch_netLcd.ino のインストール方法
 - [NetLCD/usage_ja.md](https://github.com/h-nari/NetLCD/blob/master/sketch_NetLCD/usage_ja.md "NetLCD/usage.md at master · h-nari/NetLCD"): sketch_netLcd.inoの使い方、 アクション、パラメータについて
-- [NetLCD/readme_ja.md](https://github.com/h-nari/NetLCD/blob/master/python/readme.md "NetLCD/readme_ja.md at master · h-nari/NetLCD"): netLcd.py , python libraryについて.
+- [NetLCD/readme_ja.md](https://github.com/h-nari/NetLCD/blob/master/python/readme_ja.md "NetLCD/readme_ja.md at master · h-nari/NetLCD"): netLcd.py , python libraryについて.
 
 ## Demo
 
