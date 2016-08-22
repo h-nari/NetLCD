@@ -29,6 +29,7 @@ The follow video show drawTest.py in python directory, that run on PC and draw p
 ## Requirement - Hardware
 
 - ESP8266 and LCD display with ILI9341 controller
+ - [HSES-LCD24](https://www.switch-science.com/catalog/2829/ "HSES-LCD24 - スイッチサイエンス")
 
 ## Author
 

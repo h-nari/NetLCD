@@ -23,6 +23,7 @@ ESP-WROOM-02はWiFi機能を有するコンピュータモジュールで[esp826
 pythonディレクトリにある drawTest.pyをPC側で動作させ、ネット経由で描画させています。
 
 - [youtube : demo drawTest.py](https://youtu.be/M9U3qatbHAc "drawTest.py")
+ - [HSES-LCD24](https://www.switch-science.com/catalog/2829/ "HSES-LCD24 - スイッチサイエンス")
 
 ## Requirement - Hardware
 
