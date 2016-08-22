@@ -24,7 +24,7 @@ Python library provides a class, that can draw text, shapes and image easily
 
 The follow video show drawTest.py in python directory, that run on PC and draw picture over network.
 
-<iframe width="480" height="360" src="https://www.youtube.com/embed/M9U3qatbHAc" frameborder="0"  allowfullscreen></iframe>
+- [youtube : demo drawTest.py](https://youtu.be/M9U3qatbHAc,"drawTest.py")
 
 ## Requirement - Hardware
 

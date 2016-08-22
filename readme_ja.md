@@ -2,8 +2,7 @@
 
 ネットワーク経由利用可能な320 x 240 dotの小型カラー液晶ディスプレーのためのESP8266-Arduino sketch
 
-<div align="center">
-<img src="https://github.com/h-nari/NetLCD/blob/master/img/160819a3.jpg?raw=true"></div>
+<img src="https://github.com/h-nari/NetLCD/blob/master/img/160819a3.jpg?raw=true">
 
 ## Description
 
@@ -23,9 +22,7 @@ ESP-WROOM-02はWiFi機能を有するコンピュータモジュールで[esp826
 
 pythonディレクトリにある drawTest.pyをPC側で動作させ、ネット経由で描画させています。
 
-<div align="center">
-<iframe width="480" height="360" src="https://www.youtube.com/embed/M9U3qatbHAc" frameborder="0"  allowfullscreen></iframe>
-</div>
+- [youtube : demo drawTest.py](https://youtu.be/M9U3qatbHAc,"drawTest.py")
 
 ## Requirement - Hardware
 
