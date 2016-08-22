@@ -3,7 +3,7 @@
 Programs for ESP8266 with 320 x 240 color LCD Display
 can be used over network.
 
-<img src="https://github.com/h-nari/NetLCD/blob/master/img/160819a3.jpg?raw=true">
+<img src="https://github.com/h-nari/NetLCD/blob/master/img/160819a3.jpg?raw=true" width="480"> 
 
 ## Description
 

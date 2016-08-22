@@ -2,7 +2,7 @@
 
 ネットワーク経由利用可能な320 x 240 dotの小型カラー液晶ディスプレーのためのESP8266-Arduino sketch
 
-<img src="https://github.com/h-nari/NetLCD/blob/master/img/160819a3.jpg?raw=true">
+<img src="https://github.com/h-nari/NetLCD/blob/master/img/160819a3.jpg?raw=true" width="480">
 
 ## Description
 
