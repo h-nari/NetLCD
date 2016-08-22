@@ -3,8 +3,7 @@
 Programs for ESP8266 with 320 x 240 color LCD Display
 can be used over network.
 
-<div align="center">
-<img src="https://github.com/h-nari/NetLCD/blob/master/img/160819a3.jpg?raw=true"></div>
+<img src="https://github.com/h-nari/NetLCD/blob/master/img/160819a3.jpg?raw=true">
 
 ## Description
 
@@ -25,9 +24,7 @@ Python library provides a class, that can draw text, shapes and image easily
 
 The follow video show drawTest.py in python directory, that run on PC and draw picture over network.
 
-<div align="center">
 <iframe width="480" height="360" src="https://www.youtube.com/embed/M9U3qatbHAc" frameborder="0"  allowfullscreen></iframe>
-</div>
 
 ## Requirement - Hardware
 
