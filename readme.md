@@ -16,9 +16,9 @@ Python library provides a class, that can draw text, shapes and image easily
 
 ### Other document
 
-- [NetLCD/install.md](https://github.com/h-nari/NetLCD/blob/master/sketch_NetLCD/install.md "NetLCD/install.md at master · h-nari/NetLCD"): how to install sketch_netLcd.ino 
-- [NetLCD/usage.md](https://github.com/h-nari/NetLCD/blob/master/sketch_NetLCD/usage.md "NetLCD/usage.md at master · h-nari/NetLCD"): how to use sketch_netLcd.ino, actions and parameters.
-- [NetLCD/readme.md](https://github.com/h-nari/NetLCD/blob/master/python/readme.md "NetLCD/readme.md at master · h-nari/NetLCD"): how to install netLcd.py , python library.
+- [sketch_NetLCD/install.md](https://github.com/h-nari/NetLCD/blob/master/sketch_NetLCD/install.md "NetLCD/install.md at master · h-nari/NetLCD"): how to install sketch_netLcd.ino 
+- [sketch_NetLCD/usage.md](https://github.com/h-nari/NetLCD/blob/master/sketch_NetLCD/usage.md "NetLCD/usage.md at master · h-nari/NetLCD"): how to use sketch_netLcd.ino, actions and parameters.
+- [python/readme.md](https://github.com/h-nari/NetLCD/blob/master/python/readme.md "NetLCD/readme.md at master · h-nari/NetLCD"): how to install netLcd.py , python library.
 
 ## Demo
 

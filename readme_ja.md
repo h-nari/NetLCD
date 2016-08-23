@@ -14,9 +14,9 @@ ESP-WROOM-02はWiFi機能を有するコンピュータモジュールで[esp826
 
 ### 他のドキュメント
 
-- [NetLCD/install_ja.md](https://github.com/h-nari/NetLCD/blob/master/sketch_NetLCD/install_ja.md "NetLCD/install_ja.md at master · h-nari/NetLCD"): sketch_netLcd.ino のインストール方法
-- [NetLCD/usage_ja.md](https://github.com/h-nari/NetLCD/blob/master/sketch_NetLCD/usage_ja.md "NetLCD/usage.md at master · h-nari/NetLCD"): sketch_netLcd.inoの使い方、 アクション、パラメータについて
-- [NetLCD/readme_ja.md](https://github.com/h-nari/NetLCD/blob/master/python/readme_ja.md "NetLCD/readme_ja.md at master · h-nari/NetLCD"): netLcd.py , python libraryについて.
+- [sketch_NetLCD/install_ja.md](https://github.com/h-nari/NetLCD/blob/master/sketch_NetLCD/install_ja.md "sketch_NetLCD/install_ja.md at master · h-nari/NetLCD"): sketch_netLcd.ino のインストール方法
+- [sketch_NetLCD/usage_ja.md](https://github.com/h-nari/NetLCD/blob/master/sketch_NetLCD/usage_ja.md "sketch_NetLCD/usage.md at master · h-nari/NetLCD"): sketch_netLcd.inoの使い方、 アクション、パラメータについて
+- [python/readme_ja.md](https://github.com/h-nari/NetLCD/blob/master/python/readme_ja.md "python/readme_ja.md at master · h-nari/NetLCD"): netLcd.py , python libraryについて.
 
 ## Demo
 
@@ -29,6 +29,6 @@ pythonディレクトリにある drawTest.pyをPC側で動作させ、ネット
 - ILI9341をコントローラとするディスプレーとESP-WROOM-02を有する装置
  - [HSES-LCD24](https://www.switch-science.com/catalog/2829/ "HSES-LCD24 - スイッチサイエンス")
 
-## Author
+## AuthorZZP
 
 [h-nari](https://github.com/h-nari "h-nari (Hiroshi Narimatsu)")
