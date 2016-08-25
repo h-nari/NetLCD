@@ -29,6 +29,6 @@ pythonディレクトリにある drawTest.pyをPC側で動作させ、ネット
 - ILI9341をコントローラとするディスプレーとESP-WROOM-02を有する装置
  - [HSES-LCD24](https://www.switch-science.com/catalog/2829/ "HSES-LCD24 - スイッチサイエンス")
 
-## AuthorZZP
+## Author
 
 [h-nari](https://github.com/h-nari "h-nari (Hiroshi Narimatsu)")
