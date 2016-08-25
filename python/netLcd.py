@@ -7,7 +7,7 @@ class NetLcd:
         self.set_rotation(3)
 
     def set_rotation(self,r):
-        if r==2 or r==4:
+        if r==0 or r==2:
             self.width  = 240
             self.height = 320
         elif r==1 or r==3:
@@ -22,7 +22,7 @@ class NetLcd:
         if r.status_code != requests.codes.ok:
             raise Exception(r.text)
         if 'rotation' in dict:
-            set_rotation(dict['rotation'])
+            self.set_rotation(dict['rotation'])
         
     def clear(self, **dict):
         self.send_request('clear',dict)
