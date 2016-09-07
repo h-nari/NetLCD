@@ -1,6 +1,6 @@
-#include "HSES_LCD24.h"
+#include "Humblesoft_ILI9341.h"
 
-extern HSES_LCD24 tft;
+extern Humblesoft_ILI9341 tft;
 
 typedef struct {
   int16_t tx;

@@ -74,7 +74,7 @@ param_t param_table[] = {
   {"r", &lcd_cont.r, param_int_handler, "5"},
   {"rotation",  &lcd_cont.rotation, param_rotation_handler, "3"},
   {"text", &lcd_cont.text, param_string_handler, NULL},
-  {"text_size", &lcd_cont.text_size, param_textsize_handler, "2"},
+  {"text_size", &lcd_cont.text_size, param_textsize_handler, "1"},
   {"tx", &lcd_cont.tx, param_tx_handler, NULL},
   {"ty", &lcd_cont.ty, param_ty_handler, NULL},
   {"w", &lcd_cont.w, param_int_handler, "50"},

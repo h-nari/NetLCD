@@ -1,7 +1,7 @@
 #include "SPI.h"
 #include "Adafruit_GFX.h"
 #include "Adafruit_ILI9341.h"
-#include "HSES_LCD24.h"
+#include "Humblesoft_ILI9341.h"
 
 #include <ESP8266WiFi.h>
 #include <WiFiClient.h>
@@ -10,13 +10,18 @@
 #include "conf.h"
 #include "netLcd.h"
 
+IMPORT_BIN("fontx/ILGH16XB.FNT", font_h);
+IMPORT_BIN("fontx/ILGZ16XB.FNT", font_z);
+
+extern uint8_t font_h[], font_z[];
+
 
 // #define CS_PIN	2
 // #define DC_PIN	13
 // #define RST_PIN	-1
-// HSES_LCD24 tft = HSES_LCD24(CS_PIN, DC_PIN, RST_PIN);
+// Humblesoft_ILI9341 tft = Humblsoft_ILI9341(CS_PIN, DC_PIN, RST_PIN);
 
-HSES_LCD24 tft = HSES_LCD24();	// default connection CS-IO2,DC-IO13,RST-NC 
+Humblesoft_ILI9341 tft = Humblesoft_ILI9341(); // default connection CS-IO2,DC-IO13,RST-NC 
 
 const char* ssid     = WIFI_SSID;
 const char* password = WIFI_PASSWORD;
@@ -219,6 +224,7 @@ void setup(void)
 {
   Serial.begin(115200);
   tft.begin();
+  tft.setFontx(font_h, font_z);
 
   for(param_t *p = param_table;p->name;p++){
     if(p->init_value && !p->handler(p, p->init_value)){
