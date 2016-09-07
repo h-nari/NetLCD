@@ -29,6 +29,13 @@ pythonディレクトリにある drawTest.pyをPC側で動作させ、ネット
 - ILI9341をコントローラとするディスプレーとESP-WROOM-02を有する装置
  - [HSES-LCD24](https://www.switch-science.com/catalog/2829/ "HSES-LCD24 - スイッチサイエンス")
 
+## Requirement - Libraries
+
+- Adafruit_GFX
+- Adafruit_ILI9341 (ver 1.0.2以降)
+- [Humblesoft_ILI9341](https://github.com/h-nari/Humblesoft_ILI9341 "h-nari/Humblesoft_ILI9341: add some functions to Adaruit_ILI9341")
+
+
 ## Author
 
 [h-nari](https://github.com/h-nari "h-nari (Hiroshi Narimatsu)")
