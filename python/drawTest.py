@@ -22,7 +22,7 @@ random.seed()
 
 nd.clear(bg='black')
 for i in range(100,-1,-1):
-    nd.text('%03d' % i, text_size=8, tx=100, ty=88, obscure=1,
+    nd.text('%03d' % i, text_size=4, tx=100, ty=88, obscure=1,
             color= 'red' if i == 0 else 'white',
             bg= 'black')
 time.sleep(wait_time)    
@@ -31,17 +31,17 @@ for obscure in range(2):
     nd.clear(bg='black')
     x = 5
     y = 16
-    for size in range(1,7):
+    for size in range(1,5):
         nd.text('size=%d\n' % size, tx = x, ty = y, text_size = size,
                 color=colors[size],bg='#808080',obscure=obscure)
-        y += size * 10
+        y += size * 20
     time.sleep(wait_time)
     
 nd.clear(obscure=0,bg='black')
     
 for r in range(4):
     nd.set(rotation=r)
-    nd.text('rotation=%d' % r, tx=5, ty=20, text_size=3, color=colors[r])
+    nd.text('rotation=%d' % r, tx=5, ty=20, text_size=2, color=colors[r])
 
 
 time.sleep(wait_time)
@@ -142,6 +142,8 @@ for m in range(2):
 nd.disp_image(im, (nd.width - w)/2)
 
 time.sleep(wait_time)
-t = 'Hatsune Miku / Crypton Future Media inc. / CC BY-NC'
-nd.rect(0,nd.height-16,nd.width,16,color='black',fill=1)
-nd.text(tx=0,ty=nd.height-14, color='yellow',text_size=1, text=t)
+h = 32
+nd.rect(0,nd.height-h,nd.width,h,color='black',fill=1)
+nd.set(color='yellow',text_size=1);
+nd.text('Hatsune Miku / CC BY-NC',tx=60,ty=nd.height-h+2)
+nd.text('Crypton FutureMedia inc.',tx=60,ty=nd.height-h+16)
