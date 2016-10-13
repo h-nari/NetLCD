@@ -1,5 +1,6 @@
 import requests
 import struct
+import sys
 
 class NetLcd:
     def __init__(self, ip_addr):
@@ -18,9 +19,18 @@ class NetLcd:
 
     def send_request(self, cmd, dict = []):
         url = 'http://%s/%s' % (self.ip_addr, cmd)
-        r = requests.get(url, dict)
-        if r.status_code != requests.codes.ok:
-            raise Exception(r.text)
+
+        for retry in range(5):
+            try:
+                r = requests.get(url, dict)
+                if r.status_code == requests.codes.ok:
+                    break
+            except:
+                print("Unexpected error:" , sys.exc_info()[0])
+                
+        if retry > 5:    
+            raise Exception("retry over")
+        
         if 'rotation' in dict:
             self.set_rotation(dict['rotation'])
         
@@ -68,6 +78,8 @@ class NetLcd:
         self.send_request('circle',dict)
         
     def disp_image(self, im, x=0, y=0):
+        x = int(x)
+        y = int(y)
         (w,h) = im.size
         (x0,y0) = (max(x, 0), max(y, 0))
         (x1,y1) = (min(x+w, self.width), min(y+h,self.height))

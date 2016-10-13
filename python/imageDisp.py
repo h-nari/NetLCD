@@ -18,8 +18,8 @@ for i in range(2,len(argv)):
     im = Image.open(file)
     im.thumbnail(size)
     im2 = Image.new('RGB',size)
-    ox = (im2.width  - im.width)/2
-    oy = (im2.height - im.height)/2
+    ox = int((im2.width  - im.width)/2)
+    oy = int((im2.height - im.height)/2)
     im2.paste(im, (ox,oy))
     nd.disp_image(im2)
     time.sleep(wait_time)
