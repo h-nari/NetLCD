@@ -1,8 +1,9 @@
-#include "SPI.h"
-#include "Adafruit_GFX.h"
-#include "Adafruit_ILI9341.h"
-#include "Humblesoft_ILI9341.h"
-
+#include <SPI.h>
+#include <Adafruit_GFX.h>				// https://github.com/adafruit/Adafruit-GFX-Library
+#include <Adafruit_ILI9341.h>		// https://github.com/adafruit/Adafruit_ILI9341
+#include <Fontx.h>							// https://github.com/h-nari/Fontx
+#include <FontxGfx.h>						// https://github.com/h-nari/FontxGfx
+#include <Humblesoft_ILI9341.h>	// https://github.com/h-nari/Humblesoft_ILI9341
 #include <ESP8266WiFi.h>
 #include <WiFiClient.h>
 #include <ESP8266WebServer.h>
@@ -10,11 +11,8 @@
 #include "conf.h"
 #include "netLcd.h"
 
-IMPORT_BIN("fontx/ILGH16XB.FNT", font_h);
-IMPORT_BIN("fontx/ILGZ16XB.FNT", font_z);
-
-extern uint8_t font_h[], font_z[];
-
+#include <fontx/ILGH16XB.h>
+#include <fontx/ILGZ16XB.h>
 
 // #define CS_PIN	2
 // #define DC_PIN	13
@@ -224,7 +222,7 @@ void setup(void)
 {
   Serial.begin(115200);
   tft.begin();
-  tft.setFontx(font_h, font_z);
+  tft.setFontx(ILGH16XB,ILGZ16XB);
 
   for(param_t *p = param_table;p->name;p++){
     if(p->init_value && !p->handler(p, p->init_value)){
@@ -284,4 +282,7 @@ void loop(void){
   server.handleClient();
 }
 
+/*** Local variables: ***/
+/*** tab-width:2 ***/
+/*** End: ***/
 
