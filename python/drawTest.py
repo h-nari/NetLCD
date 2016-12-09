@@ -134,7 +134,7 @@ im = Image.open('img_miku_web.jpg')
 (w,h) = im.size
 
 for m in range(2):
-    im2 = im.crop((0,0,w,h/(1 << m)))
+    im2 = im.crop((0,0,w,int(h/(1 << m))))
     im2.thumbnail((nd.width,nd.height))
     nd.disp_image(im2)
     time.sleep(wait_time)
