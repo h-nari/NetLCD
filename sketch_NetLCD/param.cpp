@@ -23,7 +23,7 @@ param_textsize_handler(param_t *ent, const char *str)
   bool r = param_int_handler(ent, str);
 
   if(r) 
-    tft.setTextSize(lcd_cont.text_size);
+    dpy.setTextSize(lcd_cont.text_size);
   return r;
 }
 
@@ -32,7 +32,7 @@ param_rotation_handler(param_t *ent, const char *str)
 {
   bool r = param_int_handler(ent, str);
   if(r)
-    tft.setRotation(lcd_cont.rotation);
+    dpy.setRotation(lcd_cont.rotation);
   return r;
 }
 
@@ -40,14 +40,14 @@ static bool param_tx_handler(param_t *ent,const char *str)
 {
   bool r = param_int_handler(ent, str);
   
-  if(r) tft.setCursor( lcd_cont.tx, tft.getCursorY());
+  if(r) dpy.setCursor( lcd_cont.tx, dpy.getCursorY());
   return r;
 }
 
 static bool param_ty_handler(param_t *ent,const char *str)
 {
   bool r = param_int_handler(ent, str);
-  if(r) tft.setCursor( tft.getCursorX(), lcd_cont.ty);
+  if(r) dpy.setCursor( dpy.getCursorX(), lcd_cont.ty);
   return r;
 }
 
@@ -72,7 +72,13 @@ param_t param_table[] = {
   {"h", &lcd_cont.h, param_int_handler, "50"},
   {"obscure", &lcd_cont.obscure, param_bool_handler, "false"},
   {"r", &lcd_cont.r, param_int_handler, "5"},
+#ifdef USE_ILI9341
   {"rotation",  &lcd_cont.rotation, param_rotation_handler, "3"},
+#elif defined(USE_SSD1306)
+  {"rotation",  &lcd_cont.rotation, param_rotation_handler, "2"},
+#else
+#error "define USE_ILI9341 or USE_SSD1306"
+#endif
   {"text", &lcd_cont.text, param_string_handler, NULL},
   {"text_size", &lcd_cont.text_size, param_textsize_handler, "1"},
   {"tx", &lcd_cont.tx, param_tx_handler, NULL},
@@ -84,5 +90,7 @@ param_t param_table[] = {
   {"y", &lcd_cont.y, param_int_handler,  "0"},
   {"y0", &lcd_cont.y0, param_int_handler, "0"},
   {"y1", &lcd_cont.y1, param_int_handler, "239"},
+  {"flush", &lcd_cont.flush, param_bool_handler, "false"},
+  {"flush_always", &lcd_cont.flush_always, param_bool_handler, "false"},
   {NULL},
 };

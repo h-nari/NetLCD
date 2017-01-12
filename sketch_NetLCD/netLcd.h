@@ -1,6 +1,13 @@
+#include "conf.h"
 #include "Humblesoft_ILI9341.h"
+#include "Humblesoft_SSD1306.h"
 
-extern Humblesoft_ILI9341 tft;
+#ifdef USE_ILI9341
+extern Humblesoft_ILI9341 dpy;
+#endif
+#ifdef USE_SSD1306
+extern Humblesoft_SSD1306 dpy;
+#endif
 
 typedef struct {
   int16_t tx;
@@ -21,7 +28,17 @@ typedef struct {
   bool fill;
   bool obscure;
   bool clear;
+  bool flush;
+  bool flush_always;
   String text;
+#ifdef USE_SSD1306
+  int16_t 	image_x;
+  int16_t 	image_y;
+  uint16_t 	image_w;
+  uint16_t 	image_h;
+  int16_t 	image_cx;
+  int16_t 	image_cy;
+#endif
 } lcd_cont_t;
 
 

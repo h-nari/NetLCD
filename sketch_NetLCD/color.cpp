@@ -6,6 +6,7 @@ typedef const struct {
 } color_name_t;
 
 color_name_t color_names[] = {
+#ifdef USE_ILI9341
   {"BLACK",	  ILI9341_BLACK},
   {"LIGHTGREY",	  ILI9341_LIGHTGREY},
   {"DARKGREY",	  ILI9341_DARKGREY},
@@ -15,6 +16,10 @@ color_name_t color_names[] = {
   {"YELLOW",	  ILI9341_YELLOW},
   {"WHITE",	  ILI9341_WHITE},
   {"PINK",	  ILI9341_PINK},
+#elif defined(USE_SSD1306)
+  {"WHITE",	  Humblesoft_SSD1306::WHITE},
+  {"BLACK",	  Humblesoft_SSD1306::BLACK},
+#endif
   {NULL, 0},
 };
 
@@ -47,7 +52,7 @@ bool param_color_handler(param_t *ent, const char *str)
   if(*str == '#'){
     int r,g,b;
     if(getHex(str+1, &r) && getHex(str+3, &g) && getHex(str+5, &b)) {
-      *pColor = tft.color565(r,g,b);
+      *pColor = dpy.colorRGB(r,g,b);
       return true;
     }
     Serial.print("Bad color:\"");

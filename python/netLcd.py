@@ -99,6 +99,29 @@ class NetLcd:
         files = {'file': ('%dx%d+%d+%d' % (ww,hh,x0,y0), img_data)}
         url_image = 'http://%s/image' % self.ip_addr
         r = requests.post(url_image, files=files)
+        
+    def disp_image_ssd1306(self, im, x=0, y=0):
+        x = int(x)
+        y = int(y)
+        (w,h) = im.size
+        (x0,y0) = (max(x, 0), max(y, 0))
+        (x1,y1) = (min(x+w, self.width), min(y+h,self.height))
+        (ww,hh) = (x1 - x0, y1 - y0)
+        (xs,ys) = (max(0, -x), max(0, -y))
+        
+        if w != ww or h != ww:
+            im2 = im.crop((xs, ys, xs+ww, ys+hh))
+        else:
+            im2 = im.copy()
+            
+        im3 = im2.convert(mode='1')
+
+        print("w:%d h:%d x:%d y:%d" % (ww, hh, x0, y0))
+
+        img_data = im3.tobytes()
+        files = {'file': ('%dx%d+%d+%d' % (ww,hh,x0,y0), img_data)}
+        url_image = 'http://%s/image' % self.ip_addr
+        r = requests.post(url_image, files=files)
 
         
         

@@ -1,25 +1,44 @@
-#include <SPI.h>
-#include <Adafruit_GFX.h>				// https://github.com/adafruit/Adafruit-GFX-Library
-#include <Adafruit_ILI9341.h>		// https://github.com/adafruit/Adafruit_ILI9341
-#include <Fontx.h>							// https://github.com/h-nari/Fontx
-#include <FontxGfx.h>						// https://github.com/h-nari/FontxGfx
-#include <Humblesoft_ILI9341.h>	// https://github.com/h-nari/Humblesoft_ILI9341
+#include "conf.h"
+
 #include <ESP8266WiFi.h>
 #include <WiFiClient.h>
 #include <ESP8266WebServer.h>
 #include <ESP8266mDNS.h>
-#include "conf.h"
+#include <Adafruit_GFX.h>				// https://github.com/adafruit/Adafruit-GFX-Library
+#include <Fontx.h>							// https://github.com/h-nari/Fontx
+#include <Humblesoft_GFX.h>			// https://github.com/h-nari/Humblesoft_GFX
+#ifdef USE_ILI9341
+#include <Adafruit_ILI9341.h>		// https://github.com/adafruit/Adafruit_ILI9341
+#include <Humblesoft_ILI9341.h>	// https://github.com/h-nari/Humblesoft_ILI9341
+#elif defined(USE_SSD1306)
+#include <Humblesoft_SSD1306.h>
+#else
+#error "you must set USE_ILI9341 or USE_SSD1306"
+#endif
+
 #include "netLcd.h"
 
+#ifdef USE_KANJI
 #include <fontx/ILGH16XB.h>
 #include <fontx/ILGZ16XB.h>
+RomFontx fontx(ILGH16XB,ILGZ16XB);
+#endif
 
-// #define CS_PIN	2
-// #define DC_PIN	13
-// #define RST_PIN	-1
-// Humblesoft_ILI9341 tft = Humblsoft_ILI9341(CS_PIN, DC_PIN, RST_PIN);
+#ifdef USE_ILI9341
+#define LCD_CS	 2
+#define LCD_DC	15
+#define LCD_RST	-1
+Humblesoft_ILI9341 dpy(LCD_CS,LCD_DC,LCD_RST);
+#endif
+#ifdef USE_SSD1306
+#define OLED_DC		  15
+#define OLED_RESET	16	
+#define OLED_CS		   2
 
-Humblesoft_ILI9341 tft = Humblesoft_ILI9341(); // default connection CS-IO2,DC-IO13,RST-NC 
+Humblesoft_SSD1306 dpy(OLED_DC, OLED_RESET, OLED_CS);
+const uint16_t white = Humblesoft_SSD1306::WHITE;
+const uint16_t black = Humblesoft_SSD1306::BLACK;
+#endif
 
 const char* ssid     = WIFI_SSID;
 const char* password = WIFI_PASSWORD;
@@ -36,23 +55,27 @@ uri_ent_t uri_list[] = {
   {"/"},
   {"/set"},
   {"/clear", [](uri_ent_t *ent){
-      tft.fillScreen(lcd_cont.bg_color);
-      tft.setCursor(0,0);
+      dpy.fillScreen(lcd_cont.bg_color);
+      dpy.setCursor(0,0);
     }},
   {"/print", [](uri_ent_t *ent){
       if(lcd_cont.clear)
-	tft.fillScreen(lcd_cont.bg_color);
+				dpy.fillScreen(lcd_cont.bg_color);
       if(lcd_cont.obscure)
-	tft.setTextColor(lcd_cont.color, lcd_cont.bg_color);
+				dpy.setTextColor(lcd_cont.color, lcd_cont.bg_color);
       else
-	tft.setTextColor(lcd_cont.color);
-      tft.print(lcd_cont.text);
+				dpy.setTextColor(lcd_cont.color);
+      dpy.print(lcd_cont.text);
+#ifdef USE_SSD1306
+			if(lcd_cont.flush)
+				dpy.display();
+#endif
   }},
   {"/pset",[](uri_ent_t *ent){
-      tft.fillRect(lcd_cont.x, lcd_cont.y, 1, 1, lcd_cont.color);
+      dpy.fillRect(lcd_cont.x, lcd_cont.y, 1, 1, lcd_cont.color);
     }},
   {"/line",[](uri_ent_t *ent){
-      tft.drawLine(lcd_cont.x0, lcd_cont.y0, lcd_cont.x1, lcd_cont.y1,
+      dpy.drawLine(lcd_cont.x0, lcd_cont.y0, lcd_cont.x1, lcd_cont.y1,
 		   lcd_cont.color);
     }},
   {"/rect",[](uri_ent_t *ent){
@@ -63,9 +86,9 @@ uri_ent_t uri_list[] = {
       else { y = lcd_cont.y + lcd_cont.h; h = -lcd_cont.h;}
       
       if(lcd_cont.fill)
-	tft.fillRect(x, y, w, h, lcd_cont.color);
+				dpy.fillRect(x, y, w, h, lcd_cont.color);
       else
-	tft.drawRect(x, y, w, h, lcd_cont.color);
+				dpy.drawRect(x, y, w, h, lcd_cont.color);
     }},
   {"/roundrect",[](uri_ent_t *ent){
       int16_t x,y,w,h;
@@ -75,17 +98,17 @@ uri_ent_t uri_list[] = {
       else { y = lcd_cont.y + lcd_cont.h; h = -lcd_cont.h;}
 
       if(w >= lcd_cont.r*2 && h >= lcd_cont.r*2){ 
-	if(lcd_cont.fill)
-	  tft.fillRoundRect(x, y, w, h, lcd_cont.r, lcd_cont.color);
-	else
-	  tft.drawRoundRect(x, y, w, h, lcd_cont.r, lcd_cont.color);
+				if(lcd_cont.fill)
+					dpy.fillRoundRect(x, y, w, h, lcd_cont.r, lcd_cont.color);
+				else
+					dpy.drawRoundRect(x, y, w, h, lcd_cont.r, lcd_cont.color);
       }
     }},
   {"/circle",[](uri_ent_t *ent){
       if(lcd_cont.fill)
-	tft.fillCircle(lcd_cont.x, lcd_cont.y, lcd_cont.r, lcd_cont.color);
+	dpy.fillCircle(lcd_cont.x, lcd_cont.y, lcd_cont.r, lcd_cont.color);
       else
-	tft.drawCircle(lcd_cont.x, lcd_cont.y, lcd_cont.r, lcd_cont.color);
+	dpy.drawCircle(lcd_cont.x, lcd_cont.y, lcd_cont.r, lcd_cont.color);
     }},
   {"/image"},
   {NULL}
@@ -104,6 +127,7 @@ void handleCommand() {
   const char *uri = s.c_str();
 
   lcd_cont.clear = false;
+	lcd_cont.flush = false;
   
   for(int i=0; i<server.args(); i++){
     String name  = server.argName(i);
@@ -112,15 +136,15 @@ void handleCommand() {
     param_t *p;
     for(p = param_table; p->name; p++){
       if(name== p->name){
-	if(p->handler && !p->handler(p, value.c_str())){
-	  String mes = "Bad value:";
-	  mes += value;
-	  mes += " found for param:";
-	  mes += name;
-	  server.send(404, "text/plain", mes);
-	  return;
-	}
-	break;
+				if(p->handler && !p->handler(p, value.c_str())){
+					String mes = "Bad value:";
+					mes += value;
+					mes += " found for param:";
+					mes += name;
+					server.send(404, "text/plain", mes);
+					return;
+				}
+				break;
       }
     }
     
@@ -129,8 +153,8 @@ void handleCommand() {
       mes += name;
       mes += " found. available params are ";
       for(p = param_table; p->name; p++){
-	mes += p->name;
-	if(p[1].name) mes += p[2].name ? "," : " and ";
+				mes += p->name;
+				if(p[1].name) mes += p[2].name ? "," : " and ";
       }
       server.send(404, "text/plain", mes);
       return;
@@ -141,7 +165,11 @@ void handleCommand() {
   for(u=uri_list; u->uri; u++){
     if(strcmp(u->uri, uri)==0){
       if(u->handler)
-	u->handler(u);
+				u->handler(u);
+#ifdef USE_SSD1306
+			if(lcd_cont.flush || lcd_cont.flush_always)
+				dpy.display();
+#endif
       break;
     }
   }
@@ -172,6 +200,28 @@ static bool getInt(const char *str, int *pVal, const char **pEnd)
   return false;
 }
 
+#ifdef USE_SSD1306
+void handleImageData_ssd1306(uint8_t *buf, uint32_t size)
+{
+	int x = lcd_cont.image_cx;
+	int y = lcd_cont.image_cy;
+	for(uint8_t *p = buf; p < buf+size; p++){
+		for(uint8_t m = 0x80; m && x < lcd_cont.image_w; m >>= 1){
+			dpy.drawPixel(lcd_cont.image_x + x, lcd_cont.image_y + y,
+										*p & m ? white : black);
+			x++;
+		}
+		if(x >= lcd_cont.image_w) {
+			x = 0;
+			if(y++ >= lcd_cont.image_h)
+				break;
+		}
+	}
+	lcd_cont.image_cx = x;
+	lcd_cont.image_cy = y;
+}
+#endif
+
 void handleImage()
 {
   static unsigned long start_ms;
@@ -186,12 +236,31 @@ void handleImage()
        getInt(p+1, &h, &p) && getInt(p+1, &x, &p))
       getInt(p+1, &y, NULL);
 
-    tft.setAddrWindow(x, y, x+w-1, y+h-1);
+#ifdef USE_ILI9341
+    dpy.setAddrWindow(x, y, x+w-1, y+h-1);
+#elif defined(USE_SSD1306)
+		lcd_cont.image_x  = x;
+		lcd_cont.image_y  = y;
+		lcd_cont.image_w = w;
+		lcd_cont.image_h = h;
+		lcd_cont.image_cx = 0;
+		lcd_cont.image_cy = 0;
+#endif
   }
   else if(upload.status == UPLOAD_FILE_WRITE){
-    tft.writedata(upload.buf, upload.currentSize);
+#ifdef USE_ILI9341
+    dpy.writedata(upload.buf, upload.currentSize);
+#elif defined(USE_SSD1306)
+		handleImageData_ssd1306(upload.buf, upload.currentSize);
+#endif
   }
   else if(upload.status == UPLOAD_FILE_END){
+#ifdef USE_SSD1306
+		if(lcd_cont.flush || lcd_cont.flush_always){
+			Serial.println("image flush");
+			dpy.display();
+		}
+#endif
     unsigned long now = millis();
     Serial.print("image loading time: ");
     Serial.print(now - start_ms);
@@ -221,9 +290,19 @@ void handleNotFound()
 void setup(void)
 {
   Serial.begin(115200);
-  tft.begin();
-  tft.setFontx(ILGH16XB,ILGZ16XB);
-
+	delay(100);
+	Serial.println("\n\nReset:");
+#ifdef USE_ILI9341
+  dpy.begin();
+#elif defined(USE_SSD1306)
+	dpy.begin();
+	dpy.setTextColor(white);
+#endif
+	
+#ifdef USE_KANJI 
+  dpy.setFont(&fontx);
+#endif
+	
   for(param_t *p = param_table;p->name;p++){
     if(p->init_value && !p->handler(p, p->init_value)){
       Serial.print("Initialize error for param:");
@@ -233,20 +312,20 @@ void setup(void)
       Serial.println();
     }
   }
-  tft.fillScreen(lcd_cont.bg_color);
-  tft.setCursor(lcd_cont.x, lcd_cont.y);
+  dpy.fillScreen(lcd_cont.bg_color);
+  dpy.setCursor(lcd_cont.x, lcd_cont.y);
 
-  Serial.println("\n\nInitialize");
-  tft.println("Initialize");
+  Serial.println("Initialize");
+  dpy.println("Initialize");
   
   WiFi.begin(ssid, password);
   Serial.print("connecting");
-  tft.print("connecting");
+  dpy.print("connecting");
   // Wait for connection
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
     Serial.print(".");
-    tft.print(".");
+    dpy.print(".");
   }
   Serial.println();
   Serial.print("Connected to ");
@@ -254,12 +333,16 @@ void setup(void)
   Serial.print("IP address: ");
   Serial.println(WiFi.localIP());
 
-  tft.println();
-  tft.println("connected.");
-  tft.print("IP addr: ");
-  tft.setTextColor(ILI9341_GREEN);
-  tft.println(WiFi.localIP());
-  tft.setTextColor(ILI9341_WHITE);
+  dpy.println();
+#ifdef USE_ILI9341
+  dpy.println("connected.");
+  dpy.print("IP addr: ");
+  dpy.setTextColor(ILI9341_GREEN);
+  dpy.println(WiFi.localIP());
+  dpy.setTextColor(ILI9341_WHITE);
+#elif defined(USE_SSD1306)
+  dpy.println(WiFi.localIP());
+#endif
 
   for(uri_ent_t *p=uri_list; p->uri; p++){ 
     if(strcmp(p->uri,"/")==0)
@@ -275,14 +358,24 @@ void setup(void)
 
   server.begin();
   Serial.println("HTTP server started");
-  tft.println("start");
+  dpy.println("start");
 }
 
 void loop(void){
   server.handleClient();
+#ifdef USE_SSD1306
+	static unsigned long t;
+	unsigned long now = millis();
+	if(dpy.modified() && (now - t > 100)){
+		t = now;
+		dpy.display();
+		Serial.println("display");
+	}
+#endif
 }
 
 /*** Local variables: ***/
-/*** tab-width:2 ***/
-/*** End: ***/
+/*** tab-width:2      ***/
+/*** truncate-lines:t ***/
+/*** End:             ***/
 
