@@ -8,7 +8,6 @@
 #include <Fontx.h>							// https://github.com/h-nari/Fontx
 #include <Humblesoft_GFX.h>			// https://github.com/h-nari/Humblesoft_GFX
 #ifdef USE_ILI9341
-#include <Adafruit_ILI9341.h>		// https://github.com/adafruit/Adafruit_ILI9341
 #include <Humblesoft_ILI9341.h>	// https://github.com/h-nari/Humblesoft_ILI9341
 #elif defined(USE_SSD1306)
 #include <Humblesoft_SSD1306.h>
@@ -237,7 +236,9 @@ void handleImage()
       getInt(p+1, &y, NULL);
 
 #ifdef USE_ILI9341
+		dpy.spi_begin();
     dpy.setAddrWindow(x, y, x+w-1, y+h-1);
+		dpy.spi_end();
 #elif defined(USE_SSD1306)
 		lcd_cont.image_x  = x;
 		lcd_cont.image_y  = y;
@@ -249,7 +250,9 @@ void handleImage()
   }
   else if(upload.status == UPLOAD_FILE_WRITE){
 #ifdef USE_ILI9341
+		dpy.spi_begin();
     dpy.writedata(upload.buf, upload.currentSize);
+		dpy.spi_end();
 #elif defined(USE_SSD1306)
 		handleImageData_ssd1306(upload.buf, upload.currentSize);
 #endif
@@ -337,9 +340,9 @@ void setup(void)
 #ifdef USE_ILI9341
   dpy.println("connected.");
   dpy.print("IP addr: ");
-  dpy.setTextColor(ILI9341_GREEN);
+  dpy.setTextColor("GREEN");
   dpy.println(WiFi.localIP());
-  dpy.setTextColor(ILI9341_WHITE);
+  dpy.setTextColor("WHITE");
 #elif defined(USE_SSD1306)
   dpy.println(WiFi.localIP());
 #endif

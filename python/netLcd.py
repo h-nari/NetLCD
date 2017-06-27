@@ -86,7 +86,7 @@ class NetLcd:
         (ww,hh) = (x1 - x0, y1 - y0)
         (xs,ys) = (max(0, -x), max(0, -y))
         
-        if w != ww or h != ww:
+        if w != ww or h != hh:
             im2 = im.crop((xs, ys, xs+ww, ys+hh))
         else:
             im2 = im.copy()
